@@ -1,0 +1,23 @@
+{
+	"name": "LS_AzureSQL_DB",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "careflow-server.database.windows.net",
+			"database": "sql-db-careFlow",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "vishal",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_AzureKeyVault",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "Azure-sql-password"
+			}
+		}
+	}
+}
