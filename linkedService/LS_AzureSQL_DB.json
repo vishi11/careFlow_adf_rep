@@ -16,7 +16,7 @@
 					"referenceName": "LS_AzureKeyVault",
 					"type": "LinkedServiceReference"
 				},
-				"secretName": "Azure-sql-password"
+				"secretName": "metadata-sql-password"
 			}
 		}
 	}
