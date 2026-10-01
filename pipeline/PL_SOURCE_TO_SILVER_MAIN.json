@@ -50,20 +50,97 @@
 					},
 					"activities": [
 						{
-							"name": "get the each values",
-							"type": "SetVariable",
-							"dependsOn": [],
+							"name": "Ingest from Source to silver",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "Inserts in progress status",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"policy": {
-								"secureOutput": false,
 								"secureInput": false
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "test",
-								"value": {
-									"value": "@string(item().table_id)",
-									"type": "Expression"
+								"pipeline": {
+									"referenceName": "PL_SOURCE_to_SILVER_INNER",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"table_id": {
+										"value": "@item().table_id",
+										"type": "Expression"
+									}
 								}
+							}
+						},
+						{
+							"name": "Inserts in progress status",
+							"type": "Script",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"linkedServiceName": {
+								"referenceName": "LS_AzureSQL_DB",
+								"type": "LinkedServiceReference"
+							},
+							"typeProperties": {
+								"scripts": [
+									{
+										"type": "Query",
+										"text": {
+											"value": "INSERT INTO ctrl.audit_log(\nadf_run_id,\ntable_id,\nstage,\nstatus,\nstart_time)\nVALUES('A1',@{item().table_id},'SOURCE_to_SILVER','In_Progress', SYSUTCDATETIME())",
+											"type": "Expression"
+										}
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00"
+							}
+						},
+						{
+							"name": "update fail status",
+							"type": "Script",
+							"dependsOn": [
+								{
+									"activity": "Ingest from Source to silver",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"linkedServiceName": {
+								"referenceName": "LS_AzureSQL_DB",
+								"type": "LinkedServiceReference"
+							},
+							"typeProperties": {
+								"scripts": [
+									{
+										"type": "Query",
+										"text": {
+											"value": "INSERT INTO ctrl.audit_log(\nadf_run_id,\ntable_id,\nstage,\nstatus,\nstart_time)\nVALUES('A1',@{item().table_id},'SOURCE_to_SILVER','In_Progress', SYSUTCDATETIME())",
+											"type": "Expression"
+										}
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00"
 							}
 						}
 					]
