@@ -202,7 +202,8 @@
 		],
 		"parameters": {
 			"table_id": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "1"
 			}
 		},
 		"variables": {
