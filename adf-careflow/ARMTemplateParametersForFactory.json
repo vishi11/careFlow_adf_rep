@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-careflow"
+		},
+		"LS_ADLS_properties_typeProperties_url": {
+			"value": "https://storagecareflow.dfs.core.windows.net/"
+		},
+		"LS_AzureDatabricks1_properties_typeProperties_existingClusterId": {
+			"value": "1001-081637-k32pg32z"
+		},
+		"LS_AzureKeyVault_properties_typeProperties_baseUrl": {
+			"value": "https://careFlow-keyvault.vault.azure.net/"
+		},
+		"LS_AzureSQL_DB_properties_typeProperties_server": {
+			"value": "careflow-server.database.windows.net"
+		},
+		"LS_AzureSQL_DB_properties_typeProperties_database": {
+			"value": "sql-db-careFlow"
+		},
+		"LS_AzureSQL_DB_properties_typeProperties_userName": {
+			"value": "vishal"
+		},
+		"LS_PostgresSQL_properties_typeProperties_server": {
+			"value": "ep-delicate-pine-b33ush1b-pooler.c-4.ap-southeast-1.aws.neon.tech"
+		},
+		"LS_PostgresSQL_properties_typeProperties_database": {
+			"value": "neondb"
+		},
+		"LS_PostgresSQL_properties_typeProperties_username": {
+			"value": "neondb_owner"
+		}
+	}
+}
