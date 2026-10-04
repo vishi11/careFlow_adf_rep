@@ -1021,6 +1021,23 @@
 										],
 										"scriptBlockExecutionTimeout": "02:00:00"
 									}
+								},
+								{
+									"name": "Pipeline Failed",
+									"type": "Fail",
+									"dependsOn": [
+										{
+											"activity": "Silver to GOLD",
+											"dependencyConditions": [
+												"Failed"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"message": "GOLD notebook failed",
+										"errorCode": "500"
+									}
 								}
 							]
 						}
